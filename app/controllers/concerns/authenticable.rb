@@ -1,5 +1,7 @@
-module Authenticable
-
+module Concerns::Authenticable
+  
+  extend ActiveSupport::Concern
+  
   def current_user
     @current_user ||= User.find_by(api_key: request.headers['X-Api-Key'])
   end
