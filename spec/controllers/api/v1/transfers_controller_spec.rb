@@ -2,35 +2,23 @@ require 'rails_helper'
 
 RSpec.describe Api::V1::TransfersController, type: :controller do
 
-  let(:other_user) { FactoryBot.create(:user) }
-  let(:transfer_params) {
-          { account_number_from: 666666666,
-            account_number_to: 555555555,
-            amount_pennies: 35,
-            country_code_from: "FR",
-            country_code_to: "IT",
-            user_id: other_user.id
-          }
-  }
-
   describe "POST #create" do
 
     before(:each) do
-    @transfer = FactoryBot.build(:transfer)
-    @user = FactoryBot.create(:user)
+      @user = FactoryBot.create(:user)
+      @transfer_params = FactoryBot.attributes_for(:transfer, user: @user)
     end
 
     context "when the credentials are correct" do
 
       before(:each) do
         request.headers['X-Api-Key'] = @user.api_key
-        post :create, params: { transfer: transfer_params }
+        post :create, params: { transfer: @transfer_params, user_id: @user.id }
       end
 
       it "returns the transfer record corresponding to the given credentials" do
-        @user.reload
+        byebug
         expect(response.headers['Location']).to match(/\/transfers\/\d+$/)
-        # expect(response.body).to be_jsonapi_response_for('transfers')
         expect(is_jsonapi_response(response.body, 'transfers'))
       end
 
@@ -43,7 +31,7 @@ RSpec.describe Api::V1::TransfersController, type: :controller do
 
       before(:each) do
         request.headers['X-Api-Key'] = "invalidApiKey"
-        post :create, params: { transfer: transfer_params }
+        post :create, params: { transfer: @transfer_params, user_id: @user.id }
       end
 
       it "returns a json with an error" do
@@ -60,9 +48,10 @@ RSpec.describe Api::V1::TransfersController, type: :controller do
   describe "DELETE #destroy" do
 
     before(:each) do
-      @transfer = FactoryBot.create :transfer
+      @user = FactoryBot.create(:user)
+      @transfer = FactoryBot.create(:transfer, user: @user)
       request.headers['X-Api-Key'] = @user.api_key
-      delete :destroy, params: { transfer: @transfer }
+      delete :destroy, params: { user_id: @user.id, id: @transfer.id }
     end
 
     it "responds with 204" do
