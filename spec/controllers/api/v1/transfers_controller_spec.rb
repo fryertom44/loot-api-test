@@ -35,7 +35,7 @@ RSpec.describe Api::V1::TransfersController, type: :controller do
 
       it "returns a json with an error" do
         expect(
-          JSON.parse(response.body, symbolize_names: true)[:errors]
+          JSON.parse(response.body).dig('errors')
         ).to eql "Not authenticated"
       end
 
@@ -64,8 +64,9 @@ RSpec.describe Api::V1::TransfersController, type: :controller do
 end
 
 def is_jsonapi_response actual, model
-    parsed_actual = JSON.parse(actual)
-    parsed_actual.dig('data', 'type') == model &&
-      parsed_actual.dig('data', 'attributes').is_a?(Hash) &&
-      parsed_actual.dig('data', 'relationships').is_a?(Hash)
+  parsed_actual = JSON.parse(actual)
+  parsed_actual.dig('data', 'type') == model &&
+  parsed_actual.dig('data', 'attributes').is_a?(Hash) &&
+  parsed_actual.dig('data', 'relationships').is_a?(Hash)
 end
+

@@ -1,16 +1,16 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :authenticate_with_api_key!, only: [:update, :destroy]
+  before_action :authenticate_with_api_key!
   before_action :set_user, only: [:show, :update, :destroy]
 
   api :GET, '/users'
   def index
     @users = User.all
-    json_response @users
+    render jsonapi: @users
   end
 
   api :GET, '/users/:id'
   def show
-    json_response @user
+    render jsonapi: @user
   end
 
   api :POST, '/users'
@@ -18,9 +18,9 @@ class Api::V1::UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      json_response @user, :created
+      render jsonapi: @user, location: [:api, @user]
     else
-      json_response @user.errors, :unprocessable_entity
+      render jsonapi_errors: @user.errors
     end
   end
 
@@ -28,15 +28,17 @@ class Api::V1::UsersController < ApplicationController
   def update
     @user = current_user
     if @user.update(user_params)
-      json_response @user, 200
+      render jsonapi: @user, location: [:api, @user]
     else
-      json_response @user.errors, 422
+      render jsonapi_errors: @user.errors
     end
   end
 
   api :DELETE, '/users'
   def destroy
-    @user.destroy
+    if @user.destroy
+      head 204
+    end
   end
 
   private

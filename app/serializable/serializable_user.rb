@@ -1,6 +1,8 @@
 class SerializableUser < JSONAPI::Serializable::Resource
   type 'users'
 
+  id { nil }
+  
   attribute :name do
     [@object.first_name, @object.last_name].join(" ")
   end
