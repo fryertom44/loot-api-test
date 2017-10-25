@@ -17,7 +17,6 @@ RSpec.describe Api::V1::TransfersController, type: :controller do
       end
 
       it "returns the transfer record corresponding to the given credentials" do
-        byebug
         expect(response.headers['Location']).to match(/\/transfers\/\d+$/)
         expect(is_jsonapi_response(response.body, 'transfers'))
       end

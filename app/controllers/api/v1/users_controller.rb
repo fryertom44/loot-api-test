@@ -2,19 +2,18 @@ class Api::V1::UsersController < ApplicationController
   before_action :authenticate_with_api_key!, only: [:update, :destroy]
   before_action :set_user, only: [:show, :update, :destroy]
 
-  # GET /users
+  api :GET, '/users'
   def index
     @users = User.all
-
     json_response @users
   end
 
-  # GET /users/1
+  api :GET, '/users/:id'
   def show
     json_response @user
   end
 
-  # POST /users
+  api :POST, '/users'
   def create
     @user = User.new(user_params)
 
@@ -25,7 +24,7 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
-  # PATCH/PUT /users/1
+  api :PUT, '/users/:id'
   def update
     @user = current_user
     if @user.update(user_params)
@@ -35,7 +34,7 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
-  # DELETE /users/1
+  api :DELETE, '/users'
   def destroy
     @user.destroy
   end

@@ -4,9 +4,9 @@ RSpec.describe Api::V1::UserSessionsController, type: :controller do
 
   describe "POST #create" do
 
-   before(:each) do
-    @user = FactoryBot.create(:user)
-   end
+    before(:each) do
+      @user = FactoryBot.create(:user)
+    end
 
     context "when the credentials are correct" do
 
@@ -44,6 +44,7 @@ RSpec.describe Api::V1::UserSessionsController, type: :controller do
         expect(response).to have_http_status(422)
       end
     end
+  end
 
   describe "DELETE #destroy" do
 
@@ -59,5 +60,4 @@ RSpec.describe Api::V1::UserSessionsController, type: :controller do
 
   end
 
-  end
 end
