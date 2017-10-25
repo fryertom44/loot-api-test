@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  username: user1
+  first_name: Tom
+  last_name: Fryer
+  address_line_1: 3 Shoreham Rise 
+  dob: 1979-04-04
+  api_key: "aa9e4708-f650-4d45-8900-37374de9c205"
+  password_digest: "$2a$05$Qyg03SrLMmwaAs1ThsY3VeUKZ/0Q//w4btF3ekFkoB2DxTTG7nP9i" #testpassword
+
+two:
+  username: user2
+  first_name: Mickey
+  last_name: Mouse
+  address_line_1: Disneyland
+  dob: 1925-01-01
+  api_key: "a6a11360-aaf0-4cb5-94f3-fe99c7bd6438"
+  password_digest: "$2a$05$Qyg03SrLMmwaAs1ThsY3VeUKZ/0Q//w4btF3ekFkoB2DxTTG7nP9i" #testpassword
