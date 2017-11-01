@@ -69,10 +69,3 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
   end
 end
-
-def is_jsonapi_response actual, model
-  parsed_actual = JSON.parse(actual)
-  parsed_actual.dig('data', 'type') == model &&
-  parsed_actual.dig('data', 'attributes').is_a?(Hash) &&
-  parsed_actual.dig('data', 'relationships').is_a?(Hash)
-end
