@@ -15,7 +15,7 @@ class Api::V1::TransfersController < ApplicationController
     end
   end
 
-  api :GET, '/users/:user_id/transfer/:id'
+  api :GET, '/users/:user_id/transfers/:id'
   def show
     render jsonapi: @transfer
   end
@@ -41,7 +41,7 @@ class Api::V1::TransfersController < ApplicationController
     end
   end
 
-  api :DELETE, '/users/:user_id/transfer/:id'
+  api :DELETE, '/users/:user_id/transfers/:id'
   def destroy
     if @transfer.destroy
       head 204
